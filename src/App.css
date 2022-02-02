@@ -1,0 +1,88 @@
+#sectionOne {
+  background-image: url("./images/car.jfif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.9;
+  height: 80vh;
+  width: 100vw;
+}
+
+#sectionOne h2 {
+  margin: auto;
+  padding-top: 10vh;
+  font-size: 3em;
+  width: 80vw;
+}
+
+#sectionOne button {
+  display: flex;
+  margin: auto;
+  font-size: 1em;
+  margin-top: 20px;
+}
+
+#sectionTwo {
+  margin-top: 20vh;
+  height: 80vh;
+  width: 100vw;
+  background-color: lightskyblue;
+}
+
+#sectionTwo .insuranceType {
+  font-size: 3.5em;
+  font-weight: 600;
+  text-align: center;
+}
+
+#sectionTwo .typeDescription {
+  font-size: 1.5em;
+  text-align: center;
+  margin: auto;
+  width: 35vw;
+}
+
+.comparison {
+  height: 80vh;
+  padding-top: 20vh;
+}
+
+#comparisonRight {
+  background-color: lightgrey;
+}
+
+#sectionThree {
+  margin-top: 10vh;
+  height: 70vh;
+}
+
+.rateBox {
+  border: lightgrey solid 1px;
+  border-radius: 10px;
+  margin-left: 5vw;
+}
+
+.ratePrice {
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+}
+
+.rateTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  padding-top: 25px;
+  padding-left: 20px;
+}
+
+.rateDescription {
+  font-size: 1rem;
+  padding-left: 20px;
+}
+
+#ratePlus {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 800;
+}
