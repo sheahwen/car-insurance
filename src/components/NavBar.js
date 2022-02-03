@@ -6,7 +6,7 @@ const NavBar = () => {
       <Link href="#">Logo</Link>
       <Link href="#sectionFour">Calculator</Link>
       <Link href="#">Login</Link>
-      <Button variant="text" href="#">
+      <Button variant="text" href="/get-quote">
         Get Quote
       </Button>
     </div>
