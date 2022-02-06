@@ -9,64 +9,86 @@ import {
 } from "recharts";
 
 // Generate Sales Data
-function createData(time, amount) {
-  return { time, amount };
-}
 
-const data = [
-  createData("00:00", 0),
-  createData("03:00", 300),
-  createData("06:00", 600),
-  createData("09:00", 800),
-  createData("12:00", 1500),
-  createData("15:00", 2000),
-  createData("18:00", 2400),
-  createData("21:00", 2400),
-  createData("24:00", undefined),
-];
-
-export default function Chart() {
+export default function Chart(props) {
   const theme = useTheme();
 
+  // change chart display
+  const chartButton = props.chartButton;
+  const chartData = props.chartData;
+
+  const current = new Date();
+
+  const data = [];
+
+  if (chartButton === "month") {
+    const createData = (month, total) => {
+      return { xaxis: month, yaxis: total };
+    };
+
+    for (const point of chartData) {
+      const monthStr = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      const monthYear = `${monthStr[Number(point.month) - 1]}-${point.year}`;
+      data.push(createData(monthYear, point.total));
+    }
+  } else if (chartButton === "day") {
+    const createData = (date, total) => {
+      return { xaxis: date, yaxis: total };
+    };
+
+    for (const point of chartData) {
+      data.push(createData(point.date, point.total));
+    }
+  }
+
   return (
-    <>
-      <div>
-        <div className="chartType">Day</div>
-        <div className="chartType">Week</div>
-        <div className="chartType">Month</div>
-      </div>
-      <ResponsiveContainer width={500} height={500}>
-        <LineChart width={400} height={400} data={data}>
-          <XAxis
-            dataKey="time"
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
-          />
-          <YAxis
-            stroke={theme.palette.text.secondary}
-            style={theme.typography.body2}
+    <div>
+      {/* <ResponsiveContainer width={500} height={300}> */}
+      <LineChart width={1000} height={300} data={data} className="chart">
+        <XAxis
+          dataKey="xaxis"
+          stroke={theme.palette.text.secondary}
+          style={theme.typography.body2}
+        />
+        <YAxis
+          stroke={theme.palette.text.secondary}
+          style={theme.typography.body2}
+        >
+          <Label
+            angle={270}
+            offset={-3}
+            position="left"
+            style={{
+              textAnchor: "middle",
+              fill: theme.palette.text.primary,
+              ...theme.typography.body1,
+            }}
           >
-            <Label
-              angle={270}
-              position="left"
-              style={{
-                textAnchor: "middle",
-                fill: theme.palette.text.primary,
-                ...theme.typography.body1,
-              }}
-            >
-              Distance Travelled (km)
-            </Label>
-          </YAxis>
-          <Line
-            type="monotone"
-            dataKey="amount"
-            stroke="#8884d8"
-            stroke={theme.palette.primary.main}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </>
+            Distance Travelled (km)
+          </Label>
+        </YAxis>
+        <Line
+          type="monotone"
+          dataKey="yaxis"
+          stroke="#8884d8"
+          stroke={theme.palette.primary.main}
+          dot={false}
+        />
+      </LineChart>
+      {/* </ResponsiveContainer> */}
+    </div>
   );
 }
