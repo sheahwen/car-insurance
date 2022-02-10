@@ -17,8 +17,24 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import UserContext from "./UserContext";
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
+  const { userToken, setUserToken } = useContext(UserContext);
+
+  const history = useHistory();
+  const routeChange = () => {
+    let path = `/`;
+    history.push(path);
+  };
+
+  if (!userToken) {
+    routeChange();
+  }
+  // const userToken =
+  // "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ0NDYwMjg1LCJpYXQiOjE2NDQ0NTk5ODUsImp0aSI6IjU5MjJmNjc5NDEwMTRmZGFiNjllMzAzMDI4NWMzNGRkIiwidXNlcl9pZCI6MX0.XlLUtp8FAs8sBpo0ef5VsIlXSXjwB8YcWQ_vxPuJVR4";
   const [data, setData] = useState(null);
   const [chartButton, setChartButton] = useState("month");
   const [chartData, setChartData] = useState({
@@ -31,14 +47,26 @@ const Dashboard = () => {
   const [reportRow, setReportRow] = useState([]);
 
   useEffect(async () => {
+    if (!userToken) {
+      routeChange();
+    }
     const url = "http://127.0.0.1:8000/user/user-detail/2/";
-    const response = await fetch(url);
-    const parsedResponse = await response.json();
-    setData(parsedResponse);
-    setChartData((prevState) => ({
-      ...prevState,
-      month: parsedResponse.month,
-    }));
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      const parsedResponse = await response.json();
+      setData(parsedResponse);
+      setChartData((prevState) => ({
+        ...prevState,
+        month: parsedResponse.month,
+      }));
+    } catch (error) {
+      console.error(error.message);
+    }
 
     // generate outstanding balance
     for (const item of data.payables) {
@@ -129,6 +157,12 @@ const Dashboard = () => {
       width: 200,
     },
   ];
+  const numofDays = new Date(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    0
+  ).getDate();
+  const currentDay = today.getDate();
 
   return (
     <div className="dashboardPage">
@@ -216,7 +250,7 @@ const Dashboard = () => {
                 1 Feb 2022 - 10 Feb 2022
               </Typography>
               <Typography variant="h3" sx={{ fontSize: 40, paddingTop: 4 }}>
-                381km
+                {data ? data.month[data.month.length - 1].total : 0} km
               </Typography>
             </Grid>
             <Grid
@@ -244,7 +278,16 @@ const Dashboard = () => {
                 Extrapolated based on month-to-date distance
               </Typography>
               <Typography variant="h3" sx={{ fontSize: 40, paddingTop: 4 }}>
-                $781
+                $
+                {data
+                  ? (
+                      30 +
+                      (data.month[data.month.length - 1].total *
+                        0.03 *
+                        numofDays) /
+                        currentDay
+                    ).toFixed(2)
+                  : 0}
               </Typography>
             </Grid>
           </Grid>

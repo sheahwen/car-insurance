@@ -136,6 +136,16 @@
   border: gray 1px solid;
 }
 
+#backSignUp {
+  margin-top: 30px;
+  justify-content: center;
+  display: flex;
+}
+
+#backSignUp button {
+  margin-right: 20px;
+}
+
 .dashboardPage {
   background-color: #f9f9f9;
 }

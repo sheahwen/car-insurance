@@ -1,26 +1,21 @@
 import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Link from "@mui/material/Link";
+import { useContext } from "react";
+import UserContext from "../UserContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const NavBar = () => {
   // states for menu
-  const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const { userToken, setUserToken } = useContext(UserContext);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+  const history = useHistory();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,49 +27,50 @@ const NavBar = () => {
 
   // states for logging out
   const handleLogOut = () => {
-    setAuth(false);
+    setUserToken(null);
     setAnchorEl(null); // to close menu
+  };
+
+  const handleNav = (props) => (e) => {
+    const path = `/${props}`;
+    history.push(path);
   };
 
   return (
     <div>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={auth}
-              onChange={handleChange}
-              aria-label="login switch"
-            />
-          }
-          label={auth ? "Logout" : "Login"}
-        />
-      </FormGroup>
       <AppBar position="fixed" color="secondary" style={{ zIndex: 1400 }}>
         <Toolbar>
-          <Link variant="h6" sx={{ flexGrow: 1, color: "black" }} href="/">
+          <Link
+            variant="h6"
+            sx={{ flexGrow: 1, color: "black", cursor: "pointer" }}
+            onClick={handleNav("")}
+          >
             LOGO
           </Link>
           <Link
             variant="h6"
-            sx={{ flexGrow: 1, color: "black" }}
-            href="#sectionFour"
+            sx={{ flexGrow: 1, color: "black", cursor: "pointer" }}
+            onClick={handleNav("#sectionFour")}
           >
             Calculator
           </Link>
           <Link
             variant="h6"
-            sx={{ flexGrow: 1, color: "black" }}
-            href="/get-quote"
+            sx={{ flexGrow: 1, color: "black", cursor: "pointer" }}
+            onClick={handleNav("get-quote")}
           >
             Get Quote
           </Link>
-          {!auth && (
-            <Link variant="h6" sx={{ flexGrow: 1, color: "black" }} href="/">
+          {!userToken && (
+            <Link
+              variant="h6"
+              sx={{ flexGrow: 1, color: "black" }}
+              href="/login"
+            >
               Log In
             </Link>
           )}
-          {auth && (
+          {userToken && (
             <div>
               <IconButton
                 size="large"
@@ -104,19 +100,13 @@ const NavBar = () => {
               >
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Link href="/dashboard">Dashboard</Link>
+                  <Link onClick={handleNav("dashboard")}>Dashboard</Link>
                 </MenuItem>
               </Menu>
             </div>
           )}
         </Toolbar>
       </AppBar>
-      {/* <Link href="#">Logo</Link>
-      <Link href="#sectionFour">Calculator</Link>
-      <Link href="#">Login</Link>
-      <Button variant="text" href="/get-quote">
-        Get Quote
-      </Button> */}
     </div>
   );
 };
