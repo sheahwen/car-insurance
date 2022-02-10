@@ -21,6 +21,7 @@ import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
 const Callback = () => {
   const [data, setData] = useState(null);
   const [step, setStep] = useState(1);
+  const [userDetails, setUserDetails] = useState(null);
 
   function Copyright(props) {
     return (
@@ -74,7 +75,6 @@ const Callback = () => {
         ),
         coeexp: obj.vehicles[0].coeexpirydate.value,
       };
-      console.log(dataObj);
       setData(dataObj);
     } catch (error) {
       console.error(error);
@@ -90,7 +90,9 @@ const Callback = () => {
     }
     inputObj["type"] = type;
     inputObj["capacity"] = input.get("capacity");
+    inputObj["licenseno"] = input.get("ic");
 
+    setUserDetails(inputObj);
     setStep(step + 1);
   };
 
@@ -101,10 +103,30 @@ const Callback = () => {
     setType(event.target.value);
   };
 
+  const createUser = async (obj) => {
+    let response = await fetch("http://localhost:8000/user/create-user/", {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
+    response = await response.json();
+    console.log(response);
+  };
+
   const handleSignUp = (event) => {
     event.preventDefault();
     const input = new FormData(event.currentTarget);
-    console.log(input.get("email"));
+    const obj = userDetails;
+    obj.username = input.get("username");
+    obj.email = input.get("email");
+    obj.password = input.get("password");
+    // setUserDetails((prevState) => ({ ...prevState, ...obj }));
+
+    // to post
+    createUser(obj);
   };
 
   return (

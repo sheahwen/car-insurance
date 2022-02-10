@@ -39,7 +39,7 @@ const theme = createTheme();
 export default function Login() {
   const history = useHistory();
   const routeChange = () => {
-    let path = `/dashboard`;
+    let path = `/dashboard/2`;
     history.push(path);
   };
 

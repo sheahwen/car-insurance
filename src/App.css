@@ -9,9 +9,10 @@
 
 #sectionOne h2 {
   margin: auto;
-  padding-top: 10vh;
+  padding-top: 15vh;
   font-size: 3em;
   width: 80vw;
+  text-align: center;
 }
 
 #sectionOne button {

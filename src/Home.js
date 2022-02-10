@@ -46,7 +46,9 @@ const Home = () => {
       <div id="sectionOne">
         <div>
           <h2>Save up to S$457/year with pay-per-km car insurance</h2>
-          <Button variant="contained">Get Quote</Button>
+          <Button variant="contained" color="primary">
+            Get Quote
+          </Button>
         </div>
       </div>
       <div id="sectionTwo">
@@ -230,7 +232,7 @@ const Home = () => {
           </Grid>
           <Grid item md={3}>
             <Typography variant="h4">Monthly fixed rate</Typography>
-            <Typography variant="h1">$29</Typography>
+            <Typography variant="h1">$30</Typography>
           </Grid>
           <Grid item md={3}>
             <Typography variant="h4">Monthly variable rate</Typography>

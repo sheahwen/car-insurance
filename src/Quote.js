@@ -42,28 +42,28 @@ const Quote = () => {
     setMake(allMakes);
   }, []);
 
-  useEffect(async () => {
-    if (input.make !== "" && input.model === "") {
-      const response = await fetch(
-        `https://car-data.p.rapidapi.com/cars?make=${input.make}&limit=10&page=0`,
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-host": "car-data.p.rapidapi.com",
-            "x-rapidapi-key":
-              "9f1ab7700dmshf27ae1be80b6095p1fa53djsn5e437c61bdea",
-          },
-        }
-      );
-      const parsedResponse = await response.json();
-      const models = parsedResponse.map((item) => item.model);
-      const modelOptions = models.filter(
-        (item, index) => models.indexOf(item) === index
-      );
-      const modelsOptionsArr = modelOptions.map((model) => model.toUpperCase());
-      setModel(modelsOptionsArr.sort());
-    }
-  }, [input]);
+  // useEffect(async () => {
+  //   if (input.make !== "" && input.model === "") {
+  //     const response = await fetch(
+  //       `https://car-data.p.rapidapi.com/cars?make=${input.make}&limit=10&page=0`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "x-rapidapi-host": "car-data.p.rapidapi.com",
+  //           "x-rapidapi-key":
+  //             "9f1ab7700dmshf27ae1be80b6095p1fa53djsn5e437c61bdea",
+  //         },
+  //       }
+  //     );
+  //     const parsedResponse = await response.json();
+  //     const models = parsedResponse.map((item) => item.model);
+  //     const modelOptions = models.filter(
+  //       (item, index) => models.indexOf(item) === index
+  //     );
+  //     const modelsOptionsArr = modelOptions.map((model) => model.toUpperCase());
+  //     setModel(modelsOptionsArr.sort());
+  //   }
+  // }, [input]);
 
   const stepIncrement = () => {
     // if (input.type && input.make && input.model && input.capacity) {
@@ -150,7 +150,7 @@ const Quote = () => {
     <>
       <NavBar />
       {step === 1 && (
-        <div style={{ marginLeft: 30 }}>
+        <div style={{ marginLeft: 30, marginTop: 80 }}>
           <Typography
             variant="h2"
             id="sectionThreeTitle"

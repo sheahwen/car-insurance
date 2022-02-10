@@ -41,7 +41,7 @@ function App() {
             <Route exact path="/get-quote">
               <Quote />
             </Route>
-            <Route exact path="/dashboard">
+            <Route path="/dashboard">
               <Dashboard />
             </Route>
             <Route exact path="/singpass">
