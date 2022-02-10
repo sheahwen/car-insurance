@@ -131,8 +131,8 @@
 #quoteRates {
   margin: auto;
   padding: 30px;
-  margin-top: 40px;
-  width: 50vw;
+  margin-top: 130px;
+  width: 500px;
   border: gray 1px solid;
 }
 
@@ -152,17 +152,21 @@
 
 .dashboard {
   margin-left: 200px;
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .profile {
   margin-left: 200px;
-  margin-top: 40px;
+  margin-top: 80px;
 }
 
 .reports {
   margin-left: 200px;
-  margin-top: 40px;
+  margin-top: 80px;
+}
+.vehicle {
+  margin-left: 200px;
+  margin-top: 80px;
 }
 
 .dashboard .chart {
@@ -177,4 +181,9 @@
 
 #vehicleTypeBlank {
   height: 50px;
+}
+
+.vehiclePart {
+  display: flex;
+  margin-bottom: 30px;
 }

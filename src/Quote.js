@@ -236,7 +236,7 @@ const Quote = () => {
         </div>
       )}
       {step === 3 && (
-        <div style={{ marginTop: 40 }}>
+        <div style={{ marginTop: 80 }}>
           <div>Sign up page</div>
         </div>
       )}

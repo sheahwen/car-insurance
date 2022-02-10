@@ -20,6 +20,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import UserContext from "./UserContext";
 import { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import DirectionsCarFilledTwoToneIcon from "@mui/icons-material/DirectionsCarFilledTwoTone";
+import NoteTwoToneIcon from "@mui/icons-material/NoteTwoTone";
 
 const Dashboard = () => {
   const { userToken, setUserToken } = useContext(UserContext);
@@ -45,6 +47,8 @@ const Dashboard = () => {
   const [displayPage, setDisplayPage] = useState("dashboard");
   const [profileRow, setProfileRow] = useState([]);
   const [reportRow, setReportRow] = useState([]);
+  const [vehicleInfo, setVehicleInfo] = useState({});
+  const [contract, setContract] = useState(false);
 
   useEffect(async () => {
     if (!userToken) {
@@ -164,12 +168,23 @@ const Dashboard = () => {
   ).getDate();
   const currentDay = today.getDate();
 
+  const handleVehicle = (data) => {
+    setVehicleInfo(data);
+    setDisplayPage("vehicle");
+    setContract(false);
+  };
+
+  const handleContract = () => {
+    setContract(!contract);
+  };
+
   return (
     <div className="dashboardPage">
       <NavBar />
       <LeftList
         vehicleList={data ? data.vehicle.map((car) => car["vehicle_no"]) : []}
         navigateList={switchDisplayPage}
+        passData={handleVehicle}
       />
       {displayPage === "dashboard" && (
         <div className="dashboard">
@@ -345,6 +360,123 @@ const Dashboard = () => {
               style={{ backgroundColor: "white" }}
             />
           </div>
+        </div>
+      )}
+      {displayPage === "vehicle" && (
+        <div className="vehicle" style={{ backgroundColor: "white" }}>
+          <Grid container>
+            <Grid item md={4}>
+              <div className="vehiclePart">
+                <DirectionsCarFilledTwoToneIcon
+                  sx={{ fontSize: 100 }}
+                  color="success"
+                />
+                <div>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontSize: 18, fontWeight: 700 }}
+                  >
+                    Car Number
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontSize: 22, lineHeight: 0.5, marginBottom: 1.5 }}
+                  >
+                    {vehicleInfo.vehicle["vehicle_no"]}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontSize: 18, fontWeight: 700 }}
+                  >
+                    Make and model
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{ fontSize: 22, lineHeight: 0.5, marginBottom: 1.5 }}
+                  >
+                    {vehicleInfo.vehicle.make}- {vehicleInfo.vehicle.model}
+                  </Typography>{" "}
+                </div>
+              </div>
+              <div className="vehiclePart">
+                <NoteTwoToneIcon sx={{ fontSize: 100 }} color="success" />{" "}
+                <div>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontSize: 18, fontWeight: 700 }}
+                  >
+                    Contract number
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: 22,
+                      lineHeight: 0.5,
+                      marginBottom: 1.5,
+                      cursor: "pointer",
+                    }}
+                    onClick={handleContract}
+                  >
+                    {vehicleInfo.contract["contract_no"]}
+                  </Typography>{" "}
+                  <Typography variant="h4"></Typography>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    sx={{ fontSize: 18, fontWeight: 700 }}
+                  >
+                    Application Status:
+                  </Typography>
+                  {vehicleInfo.contract["application_status"] ? (
+                    <>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          fontSize: 22,
+                          lineHeight: 0.5,
+                          marginBottom: 1.5,
+                        }}
+                        color="green"
+                      >
+                        {" "}
+                        Success
+                      </Typography>
+                    </>
+                  ) : (
+                    <>
+                      <Typography
+                        variant="h4"
+                        sx={{
+                          fontSize: 22,
+                          lineHeight: 0.5,
+                          marginBottom: 1.5,
+                        }}
+                        color="secondary"
+                      >
+                        {" "}
+                        Pending
+                      </Typography>
+                    </>
+                  )}{" "}
+                </div>
+              </div>
+            </Grid>
+            <Grid item md={8}>
+              {contract && (
+                <Paper
+                  elevation={3}
+                  sx={{ width: "85%", marginLeft: 5, height: "80vh" }}
+                >
+                  <Typography variant="h1">
+                    The contract will be shown here
+                  </Typography>
+                </Paper>
+              )}
+            </Grid>
+          </Grid>
         </div>
       )}
     </div>

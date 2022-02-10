@@ -7,16 +7,24 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import PersonIcon from "@mui/icons-material/Person";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Drawer, Toolbar, Divider, List } from "@mui/material";
+import { useState } from "react";
 
 const LeftList = (props) => {
   const vehicleList = props.vehicleList;
-  const renderVehicleList = vehicleList.map((car) => {
+  const handleVehicle = async (e) => {
+    const vehicleId = e.target.innerText;
+    const url = "http://127.0.0.1:8000/user/vehicle-detail/" + vehicleId + "/";
+    let data = await fetch(url);
+    data = await data.json();
+    props.passData(data);
+  };
+  const printVehicleList = vehicleList.map((car) => {
     return (
       <ListItem button>
         <ListItemIcon>
           <DirectionsCarIcon />
         </ListItemIcon>
-        <ListItemText primary={car} />
+        <ListItemText primary={car} onClick={handleVehicle} />
       </ListItem>
     );
   });
@@ -70,7 +78,7 @@ const LeftList = (props) => {
       <List>
         <div>
           <ListSubheader inset>Vehicles</ListSubheader>
-          {renderVehicleList}
+          {printVehicleList}
         </div>
       </List>
     </Drawer>
