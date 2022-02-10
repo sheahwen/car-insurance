@@ -14,6 +14,7 @@ import {
   ToggleButtonGroup,
 } from "@mui/material";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import { useHistory } from "react-router-dom";
 
 const Quote = () => {
   const [step, setStep] = useState(1);
@@ -69,6 +70,9 @@ const Quote = () => {
     //   setStep(step + 1);
     // }
     setStep(step + 1);
+    if (step === 2) {
+      handleSingpass();
+    }
   };
 
   const stepDecrement = () => {
@@ -113,7 +117,34 @@ const Quote = () => {
     }
   };
 
-  const signingUp = () => {};
+  const history = useHistory();
+
+  const handleSingpass = async () => {
+    let data = null;
+    try {
+      const url = "http://localhost:5000/getEnv";
+      data = await fetch(url);
+      data = await data.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+
+    const state = "123";
+    var authoriseUrl =
+      data.authApiUrl +
+      "?client_id=" +
+      data.clientId +
+      "&attributes=" +
+      data.attributes +
+      "&purpose=" +
+      "demonstrating MyInfo APIs" +
+      "&state=" +
+      encodeURIComponent(state) +
+      "&redirect_uri=" +
+      data.redirectUrl;
+    window.location.assign(authoriseUrl);
+  };
 
   return (
     <>
@@ -198,7 +229,7 @@ const Quote = () => {
           </div>
         </div>
       )}
-      {step === 2 && (
+      {(step === 2 || step === 3) && (
         <div>
           <div id="quoteRates">
             <DirectionsCarIcon sx={{ fontSize: 100 }} />
@@ -229,15 +260,24 @@ const Quote = () => {
             <Button variant="contained" color="warning" onClick={stepDecrement}>
               Back
             </Button>
-            <Button variant="contained" onClick={stepIncrement}>
-              Sign Up
-            </Button>
+            {step === 2 && (
+              <Button variant="contained" onClick={stepIncrement}>
+                Sign Up
+              </Button>
+            )}
+            {step === 3 && (
+              <Button variant="contained" onClick={stepIncrement} color="info">
+                Retrive Info from Singpass
+              </Button>
+            )}
           </div>
         </div>
       )}
       {step === 3 && (
-        <div style={{ marginTop: 80 }}>
-          <div>Sign up page</div>
+        <div
+          style={{ marginTop: 40, alignItems: "center", textAlign: "center" }}
+        >
+          <Typography>Retrieving info from Singpass... </Typography>
         </div>
       )}
     </>
