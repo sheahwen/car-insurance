@@ -70,7 +70,7 @@ const Quote = () => {
     //   setStep(step + 1);
     // }
     setStep(step + 1);
-    if (step === 2) {
+    if (step === 3) {
       handleSingpass();
     }
   };
@@ -273,7 +273,7 @@ const Quote = () => {
           </div>
         </div>
       )}
-      {step === 3 && (
+      {step === 4 && (
         <div
           style={{ marginTop: 40, alignItems: "center", textAlign: "center" }}
         >

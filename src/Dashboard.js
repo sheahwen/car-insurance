@@ -470,9 +470,7 @@ const Dashboard = () => {
                   elevation={3}
                   sx={{ width: "85%", marginLeft: 5, height: "80vh" }}
                 >
-                  <Typography variant="h1">
-                    The contract will be shown here
-                  </Typography>
+                  <Typography variant="h1">This is a contract</Typography>
                 </Paper>
               )}
             </Grid>

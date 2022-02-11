@@ -138,7 +138,7 @@ const Home = () => {
             <Grid container className="rateBox" style={{ width: "60%" }}>
               <Grid item md={3}>
                 <Typography variant="h3" className="ratePrice">
-                  $29
+                  $30
                 </Typography>
               </Grid>
               <Grid item md={9}>

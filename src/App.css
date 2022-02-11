@@ -3,13 +3,14 @@
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0.9;
-  height: 80vh;
+  height: 85vh;
   width: 100%;
+  margin-top: 60px;
 }
 
 #sectionOne h2 {
   margin: auto;
-  padding-top: 15vh;
+  padding-top: 10vh;
   font-size: 3em;
   width: 80vw;
   text-align: center;

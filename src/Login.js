@@ -71,8 +71,10 @@ export default function Login() {
     // check if user is valid
     if (accessToken) {
       routeChange();
+    } else {
+      console.log("invalid user");
+      data.set.password = "";
     }
-    console.log("invalid user");
   };
 
   return (
